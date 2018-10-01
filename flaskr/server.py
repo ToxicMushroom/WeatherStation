@@ -13,7 +13,7 @@ def index():
 
 @app.route("/api/")
 def api():
-    return jsonify(database.temperatuur_list)
+    return jsonify(database.stats_list)
 
 
 if __name__ == '__main__':

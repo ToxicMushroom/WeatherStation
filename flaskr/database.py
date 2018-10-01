@@ -2,7 +2,7 @@ import time
 import threading
 import random
 
-temperatuur_list = {"temperaturen": []}
+stats_list = {"temperaturen": []}
 
 
 def current_milli_time():
@@ -19,5 +19,13 @@ def dummy_data():
 
 
 def add_temp(temp):
-    temperatuur_list["temperaturen"].append({'time': current_milli_time(), 'temp': temp})
+    #Keep list at length 5 History will be added latest
+    if len(stats_list["temperaturen"]) > 4:
+        stats_list["temperaturen"][0] = stats_list["temperaturen"][1]
+        stats_list["temperaturen"][1] = stats_list["temperaturen"][2]
+        stats_list["temperaturen"][2] = stats_list["temperaturen"][3]
+        stats_list["temperaturen"][3] = stats_list["temperaturen"][4]
+        stats_list["temperaturen"].pop();
+
+    stats_list["temperaturen"].append({'time': current_milli_time(), 'temp': temp})
 

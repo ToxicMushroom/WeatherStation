@@ -23,6 +23,13 @@ function dataUpdater() {
     const httpreq = new XMLHttpRequest();
     httpreq.open("GET", "http://localhost/api/",false);
     httpreq.send(null);
-    console.log(JSON.parse(httpreq.responseText));
+    var list = [];
+    var temps = JSON.parse(httpreq.responseText)["temperaturen"];
+    for (var key in temps) {
+        list.push({x: temps[key]["time"], y: temps[key]["temp"]});
+    }
+    console.log(list);
+    tempChart.options.data[0] = list;
+    tempChart.render();
     setTimeout(dataUpdater, 1000);
 }
