@@ -25,7 +25,7 @@ def add_temp(temp):
         stats_list["temperaturen"][1] = stats_list["temperaturen"][2]
         stats_list["temperaturen"][2] = stats_list["temperaturen"][3]
         stats_list["temperaturen"][3] = stats_list["temperaturen"][4]
-        stats_list["temperaturen"].pop();
+        stats_list["temperaturen"].pop()
 
     stats_list["temperaturen"].append({'time': current_milli_time(), 'temp': temp})
 
