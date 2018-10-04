@@ -5,11 +5,23 @@ window.onload = function () {
         backgroundColor: "#202225",
         animationEnabled: true,
         theme: 'dark2',
+        title: {
+            text: "Temperatuur",
+            fontWeight: "normal",
+            fontFamily: "roboto",
+            fontSize: 30
+        },
         axisX: {
-            title: "Tijd"
+            title: "Tijd",
+            titleFontWeight: "normal",
+            titleFontFamily: "roboto",
+            fontSize: 20
         },
         axisY: {
             title: "Graden Celcius",
+            titleFontWeight: "normal",
+            titleFontFamily: "roboto",
+            fontSize: 20,
             includeZero: false
         },
         data: [{

@@ -1,25 +1,33 @@
 import time
 import threading
 import random
+import sqlite3
 
 stats_list = {"temperaturen": []}
-
 
 def current_milli_time():
     return int(round(time.time() * 1000))
 
 
 def init():
+    conn = sqlite3.connect('stats.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS temps (bigint time, int degree)''')
+    conn.commit()
+    conn.close()
     threading.Thread(target=dummy_data, args=()).start()
 
+
 def dummy_data():
+
     while 1:
         add_temp(random.randint(-10, 30))
         time.sleep(5)
 
 
 def add_temp(temp):
-    #Keep list at length 5 History will be added latest
+
+    # Keep list at length 5 History will be added latest
     if len(stats_list["temperaturen"]) > 4:
         stats_list["temperaturen"][0] = stats_list["temperaturen"][1]
         stats_list["temperaturen"][1] = stats_list["temperaturen"][2]
@@ -28,4 +36,3 @@ def add_temp(temp):
         stats_list["temperaturen"].pop()
 
     stats_list["temperaturen"].append({'time': current_milli_time(), 'temp': temp})
-
