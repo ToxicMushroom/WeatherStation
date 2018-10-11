@@ -1,4 +1,7 @@
 let tempChart;
+let tempSize = 5;
+let tempMinuten = 1;
+
 
 window.onload = function () {
     tempChart = new CanvasJS.Chart("temp-graph", {
@@ -38,12 +41,12 @@ window.onload = function () {
 
 function dataUpdater() {
     const httpreq = new XMLHttpRequest();
-    httpreq.open("GET", "http://localhost/api/", false);
+    httpreq.open("GET", "http://localhost/api/temperatuur?size=" + tempSize + "&minuten=" + tempMinuten, false);
     httpreq.send(null);
     var list = [];
-    var temps = JSON.parse(httpreq.responseText)["temperaturen"];
+    var temps = JSON.parse(httpreq.responseText);
     for (var key in temps) {
-        list.push({label: msToTime(temps[key]["time"]), y: temps[key]["temp"]});
+        list.push({label: msToTime(temps[key]["time"]), y: temps[key]["degree"]});
     }
     console.log(list);
     tempChart.options.data[0].dataPoints = list;
@@ -61,4 +64,8 @@ function msToTime(duration) {
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
     return hours + ":" + minutes + ":" + seconds;
+}
+
+function updateInput(val) {
+
 }

@@ -20,7 +20,7 @@ def init():
 def dummy_data():
     while 1:
         add_temp(random.randint(-10, 30))
-        time.sleep(5)
+        time.sleep(1)
 
 
 def add_temp(temp):
