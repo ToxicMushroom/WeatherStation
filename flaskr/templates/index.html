@@ -8,15 +8,40 @@
 <div class='main-wrapper'>
     <div class="block-item" id='temp-block'>
         <div class="button-row">
-            <label for="temp-size">Size</label>
-            <input id="temp-size" type="number" value="5" onchange="updateInput(this)">
-
-            <label for="temp-minuten">Minuten</label>
-            <input id="temp-minuten" type="number" value="1" onchange="updateInput(this)">
+            <div>
+                <label for="temp-size">Size</label>
+                <input id="temp-size" type="number" value="5">
+            </div>
+            <div>
+                <label for="temp-minuten">Minuten</label>
+                <input id="temp-minuten" type="number" value="1">
+            </div>
         </div>
         <div id='temp-graph' class='graph'></div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$("input[type=number]").on("keyup change click", function () {
+    if ($(this).attr("id") === "temp-size") {
+        tempSize = val.val();
+    } else if ($(this).attr("id") === "temp-minuten") {
+        tempMinuten = val.val();
+    }
+});
+
+$("input[type=text], input[type=number]").focusin(function () {
+    var sibling = $(this).next("label");
+    if (!sibling.hasClass("active")) {
+        sibling.toggleClass("active");
+    }
+}).focusout(function () {
+    var sibling = $(this).next("label");
+    if (sibling.hasClass("active") && $(this).val() === "") {
+        sibling.toggleClass("active");
+    }
+});
+</script>
 <script type="text/javascript" src="{{ url_for('static', filename='canvas.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>

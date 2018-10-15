@@ -3,6 +3,7 @@ let tempSize = 5;
 let tempMinuten = 1;
 
 
+
 window.onload = function () {
     tempChart = new CanvasJS.Chart("temp-graph", {
         backgroundColor: "#202225",
@@ -66,6 +67,5 @@ function msToTime(duration) {
     return hours + ":" + minutes + ":" + seconds;
 }
 
-function updateInput(val) {
 
-}
+
