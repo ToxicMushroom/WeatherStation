@@ -36,7 +36,6 @@ window.onload = function () {
         }]
     });
     tempChart.render();
-    console.log(tempChart.options.data[0].dataPoints);
     dataUpdater()
 };
 
@@ -49,7 +48,6 @@ function dataUpdater() {
     for (var key in temps) {
         list.push({label: msToTime(temps[key]["time"]), y: temps[key]["degree"]});
     }
-    console.log(list);
     tempChart.options.data[0].dataPoints = list;
     tempChart.render();
     setTimeout(dataUpdater, 5000);
@@ -66,6 +64,15 @@ function msToTime(duration) {
 
     return hours + ":" + minutes + ":" + seconds;
 }
+
+$("input[type=number]").on("keyup change click", function () {
+    if ($(this).attr("id") === "temp-size") {
+        tempSize = $(this).val();
+    } else if ($(this).attr("id") === "temp-minuten") {
+        tempMinuten = $(this).val();
+    }
+});
+
 
 
 

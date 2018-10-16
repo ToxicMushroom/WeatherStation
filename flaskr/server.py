@@ -1,13 +1,14 @@
 import math
 import sqlite3
+import re
 
 from flask import Flask, render_template, jsonify, request
 import database
 
 app = Flask(__name__)
+pattern = re.compile("\\d+")
 
 database.init()
-
 
 @app.route("/", methods=['GET'])
 def index():
@@ -19,12 +20,12 @@ def api():
     size = request.args.get('size')
     minuten = request.args.get('minuten')
 
-    if size is None:
+    if not pattern.match(str(size)):
         size = 5
     else:
         size = int(request.args.get('size'))
 
-    if minuten is None:
+    if not pattern.match(str(minuten)):
         minuten = 1
     else:
         minuten = int(request.args.get('minuten'))
