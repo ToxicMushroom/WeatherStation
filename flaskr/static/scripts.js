@@ -3,6 +3,9 @@ let tempSize = 5;
 let tempMinuten = 1;
 
 
+let speedChart;
+let speedSize = 5;
+let speedMinuten = 1;
 
 window.onload = function () {
     tempChart = new CanvasJS.Chart("temp-graph", {
@@ -35,22 +38,68 @@ window.onload = function () {
             ]
         }]
     });
+    speedChart = new CanvasJS.Chart("speed-graph", {
+        backgroundColor: "#202225",
+        animationEnabled: true,
+        theme: 'dark2',
+        title: {
+            text: "WindSnelheid",
+            fontWeight: "normal",
+            fontFamily: "roboto",
+            fontSize: 30
+        },
+        axisX: {
+            title: "Tijd",
+            titleFontWeight: "normal",
+            titleFontFamily: "roboto",
+            fontSize: 20
+        },
+        axisY: {
+            title: "Snelheid in km/h",
+            titleFontWeight: "normal",
+            titleFontFamily: "roboto",
+            fontSize: 20,
+            includeZero: false
+        },
+        data: [{
+            type: 'area',
+            dataPoints: [
+                {x: 0, y: 0}
+            ]
+        }]
+    });
+    speedChart.render();
     tempChart.render();
-    dataUpdater()
+    tempDataUpdater();
+    speedDataUpdater();
 };
 
-function dataUpdater() {
-    const httpreq = new XMLHttpRequest();
-    httpreq.open("GET", "http://localhost/api/temperatuur?size=" + tempSize + "&minuten=" + tempMinuten, false);
-    httpreq.send(null);
+function tempDataUpdater() {
+    const httpreq_temp = new XMLHttpRequest();
+    httpreq_temp.open("GET", "http://localhost/api/temperatuur?size=" + tempSize + "&minuten=" + tempMinuten, false);
+    httpreq_temp.send(null);
     var list = [];
-    var temps = JSON.parse(httpreq.responseText);
+    var temps = JSON.parse(httpreq_temp.responseText);
     for (var key in temps) {
         list.push({label: msToTime(temps[key]["time"]), y: temps[key]["degree"]});
     }
     tempChart.options.data[0].dataPoints = list;
     tempChart.render();
-    setTimeout(dataUpdater, 5000);
+    setTimeout(tempDataUpdater, 5000);
+}
+
+function speedDataUpdater() {
+    const httpreq_speed = new XMLHttpRequest();
+    httpreq_speed.open("GET", "http://localhost/api/windsnelheid?size=" + speedSize + "&minuten=" + speedMinuten, false);
+    httpreq_speed.send(null);
+    var list = [];
+    var speeds = JSON.parse(httpreq_speed.responseText);
+    for (var key in speeds) {
+        list.push({label: msToTime(speeds[key]["time"]), y: speeds[key]["speed"]});
+    }
+    speedChart.options.data[0].dataPoints = list;
+    speedChart.render();
+    setTimeout(speedDataUpdater, 5000);
 }
 
 function msToTime(duration) {
@@ -69,6 +118,10 @@ $("input[type=number]").on("keyup change click", function () {
     if ($(this).attr("id") === "temp-size") {
         tempSize = $(this).val();
     } else if ($(this).attr("id") === "temp-minuten") {
+        tempMinuten = $(this).val();
+    } else if ($(this).attr("id") === "speed-size") {
+        tempSize = $(this).val();
+    } else if ($(this).attr("id") === "speed-minuten") {
         tempMinuten = $(this).val();
     }
 });
