@@ -2,6 +2,10 @@ import time
 import threading
 import random
 import sqlite3
+import serial
+
+ser = serial.Serial("/dev/ttyUSB0", 9600)
+ser.flushInput()
 
 
 def current_milli_time():
@@ -15,24 +19,25 @@ def init():
     c.execute("CREATE TABLE IF NOT EXISTS speeds (time bigint, speed double)")
     conn.commit()
     conn.close()
-    threading.Thread(target=dummy_data, args=()).start()
+    threading.Thread(target=reader, args=()).start()
 
 
-def dummy_data():
+def reader():
     while 1:
-        add_temp(random.randint(-10, 30))
-        add_speed(random.uniform(0.0, 50.0))
-        time.sleep(1)
+        linein = ser.readline()
+        if linein != "":
+            print(linein)
 
 
 def add_temp(temp):
     time = current_milli_time()
-    # Keep list at length 5 History will be added latest
+    # Keep list at length 5 History will be added latestx
     conn = sqlite3.connect('stats.db')
     c = conn.cursor()
     c.execute("INSERT INTO temps (time, degree) VALUES ('" + str(time) + "', '" + str(temp) + "' )")
     conn.commit()
     conn.close()
+
 
 def add_speed(speed):
     time = current_milli_time()

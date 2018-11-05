@@ -2,6 +2,7 @@ import math
 import sqlite3
 import re
 
+
 from flask import Flask, render_template, jsonify, request
 import database
 
@@ -95,3 +96,4 @@ def api_speed():
 
 if __name__ == '__main__':
     app.run(debug=True, port=80, host='0.0.0.0')
+

@@ -120,9 +120,9 @@ $("input[type=number]").on("keyup change click", function () {
     } else if ($(this).attr("id") === "temp-minuten") {
         tempMinuten = $(this).val();
     } else if ($(this).attr("id") === "speed-size") {
-        tempSize = $(this).val();
+        speedSize = $(this).val();
     } else if ($(this).attr("id") === "speed-minuten") {
-        tempMinuten = $(this).val();
+        speedMinuten = $(this).val();
     }
 });
 
