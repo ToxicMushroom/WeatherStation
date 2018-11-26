@@ -7,6 +7,11 @@ let speedChart;
 let speedSize = 5;
 let speedMinuten = 1;
 
+
+let presureChart;
+let presureSize = 5;
+let presureMinuten = 1;
+
 window.onload = function () {
     tempChart = new CanvasJS.Chart("temp-graph", {
         backgroundColor: "#202225",
@@ -68,10 +73,44 @@ window.onload = function () {
             ]
         }]
     });
+
+    presureChart = new CanvasJS.Chart("presure-graph", {
+        backgroundColor: "#202225",
+        animationEnabled: true,
+        theme: 'dark2',
+        title: {
+            text: "LuchtDruk",
+            fontWeight: "normal",
+            fontFamily: "roboto",
+            fontSize: 30
+        },
+        axisX: {
+            title: "Tijd",
+            titleFontWeight: "normal",
+            titleFontFamily: "roboto",
+            fontSize: 20
+        },
+        axisY: {
+            title: "Druk in hPa",
+            titleFontWeight: "normal",
+            titleFontFamily: "roboto",
+            fontSize: 20,
+            includeZero: false
+        },
+        data: [{
+            type: 'area',
+            dataPoints: [
+                {x: 0, y: 0}
+            ]
+        }]
+    });
+
     speedChart.render();
     tempChart.render();
+    presureChart.render();
     tempDataUpdater();
     speedDataUpdater();
+    presureDataUpdater();
 };
 
 function tempDataUpdater() {
@@ -102,6 +141,21 @@ function speedDataUpdater() {
     setTimeout(speedDataUpdater, 5000);
 }
 
+function presureDataUpdater() {
+    const httpreq_speed = new XMLHttpRequest();
+    httpreq_speed.open("GET", "http://localhost/api/druk?size=" + presureSize + "&minuten=" + presureMinuten, false);
+    httpreq_speed.send(null);
+    var list = [];
+    var presures = JSON.parse(httpreq_speed.responseText);
+    for (const key in presures) {
+        list.push({label: msToTime(presures[key]["time"]), y: presures[key]["presure"]});
+    }
+    presureChart.options.data[0].dataPoints = list;
+    presureChart.render();
+    setTimeout(presureDataUpdater, 5000);
+}
+
+
 function msToTime(duration) {
     var seconds = parseInt((duration / 1000) % 60),
         minutes = parseInt((duration / (1000 * 60)) % 60),
@@ -123,6 +177,10 @@ $("input[type=number]").on("keyup change click", function () {
         speedSize = $(this).val();
     } else if ($(this).attr("id") === "speed-minuten") {
         speedMinuten = $(this).val();
+    } else if ($(this).attr("id") === "presure-size") {
+        presureSize = $(this).val();
+    } else if ($(this).attr("id") === "presure-minuten") {
+        presureMinuten = $(this).val();
     }
 });
 
