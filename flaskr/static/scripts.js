@@ -12,6 +12,8 @@ let presureChart;
 let presureSize = 5;
 let presureMinuten = 1;
 
+const host = "localhost";
+
 window.onload = function () {
     tempChart = new CanvasJS.Chart("temp-graph", {
         backgroundColor: "#202225",
@@ -115,7 +117,7 @@ window.onload = function () {
 
 function tempDataUpdater() {
     const httpreq_temp = new XMLHttpRequest();
-    httpreq_temp.open("GET", "http://localhost/api/temperatuur?size=" + tempSize + "&minuten=" + tempMinuten, false);
+    httpreq_temp.open("GET", "http://" + host + "/api/temperatuur?size=" + tempSize + "&minuten=" + tempMinuten, false);
     httpreq_temp.send(null);
     var list = [];
     var temps = JSON.parse(httpreq_temp.responseText);
@@ -129,7 +131,7 @@ function tempDataUpdater() {
 
 function speedDataUpdater() {
     const httpreq_speed = new XMLHttpRequest();
-    httpreq_speed.open("GET", "http://localhost/api/windsnelheid?size=" + speedSize + "&minuten=" + speedMinuten, false);
+    httpreq_speed.open("GET", "http://" + host + "/api/windsnelheid?size=" + speedSize + "&minuten=" + speedMinuten, false);
     httpreq_speed.send(null);
     var list = [];
     var speeds = JSON.parse(httpreq_speed.responseText);
@@ -143,7 +145,7 @@ function speedDataUpdater() {
 
 function presureDataUpdater() {
     const httpreq_speed = new XMLHttpRequest();
-    httpreq_speed.open("GET", "http://localhost/api/druk?size=" + presureSize + "&minuten=" + presureMinuten, false);
+    httpreq_speed.open("GET", "http://" + host + "/api/druk?size=" + presureSize + "&minuten=" + presureMinuten, false);
     httpreq_speed.send(null);
     var list = [];
     var presures = JSON.parse(httpreq_speed.responseText);
