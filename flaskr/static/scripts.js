@@ -170,21 +170,30 @@ function msToTime(duration) {
     return hours + ":" + minutes + ":" + seconds;
 }
 
-$("input[type=number]").on("keyup change click", function () {
-    if ($(this).attr("id") === "temp-size") {
-        tempSize = $(this).val();
-    } else if ($(this).attr("id") === "temp-minuten") {
-        tempMinuten = $(this).val();
-    } else if ($(this).attr("id") === "speed-size") {
-        speedSize = $(this).val();
-    } else if ($(this).attr("id") === "speed-minuten") {
-        speedMinuten = $(this).val();
-    } else if ($(this).attr("id") === "presure-size") {
-        presureSize = $(this).val();
-    } else if ($(this).attr("id") === "presure-minuten") {
-        presureMinuten = $(this).val();
-    }
-});
+window.onload = () => {
+    document.querySelectorAll("input[type=number]").forEach(input => {
+        let elem = input;
+        elem.addEventListener("change", commitChanges);
+        elem.addEventListener("click", commitChanges);
+        elem.addEventListener("keyup", commitChanges);
+    });
+};
+
+
+function commitChanges() {
+    let tempSizeDom = document.getElementById("temp-size").value;
+    tempSize = tempSizeDom.value;
+    let tempMinutenDom = document.getElementById("temp-minuten").value;
+    tempMinuten = tempMinutenDom.value;
+    let speedSizeDom = document.getElementById("speed-size").value;
+    tempSize = speedSizeDom.value;
+    let speedMinutenDom = document.getElementById("speed-minuten").value;
+    tempSize = speedMinutenDom.value;
+    let presureSizeDom = document.getElementById("presure-size").value;
+    tempSize = presureSizeDom.value;
+    let presureMinutenDom = document.getElementById("presure-minuten").value;
+    tempSize = presureMinutenDom.value;
+}
 
 
 

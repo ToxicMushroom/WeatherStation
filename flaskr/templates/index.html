@@ -46,19 +46,22 @@
         <div id='presure-graph' class='graph'></div>
     </div>
 </div>
-<script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
 <script type="text/javascript">
-$("input[type=text], input[type=number]").focusin(function () {
-    var sibling = $(this).next("label");
-    if (!sibling.hasClass("active")) {
-        sibling.toggleClass("active");
-    }
-}).focusout(function () {
-    var sibling = $(this).next("label");
-    if (sibling.hasClass("active") && $(this).val() === "") {
-        sibling.toggleClass("active");
-    }
-});
+    document.querySelectorAll("input[type=text], input[type=number]").forEach(input => {
+        const elem = input;
+        elem.addEventListener("onfocusin", () => {
+            const label = elem.parentElement.firstElementChild;
+            if (!label.classList.contains("active")) {
+                label.classList.add("active");
+            }
+        });
+        elem.addEventListener("focusout", () => {
+            const label = elem.parentElement.firstElementChild;
+            if (label.classList.contains("active") || elem.value === "") {
+                label.classList.remove("active");
+            }
+        });
+    });
 </script>
 <script type="text/javascript" src="{{ url_for('static', filename='canvas.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
