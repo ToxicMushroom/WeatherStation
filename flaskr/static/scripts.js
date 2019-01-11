@@ -8,9 +8,9 @@ let speedSize = 5;
 let speedMinuten = 1;
 
 
-let presureChart;
-let presureSize = 5;
-let presureMinuten = 1;
+let pressureChart;
+let pressureSize = 5;
+let pressureMinuten = 1;
 
 const host = "localhost";
 
@@ -75,7 +75,7 @@ speedChart = new CanvasJS.Chart("speed-graph", {
     }]
 });
 
-presureChart = new CanvasJS.Chart("presure-graph", {
+pressureChart = new CanvasJS.Chart("presure-graph", {
     backgroundColor: "#202225",
     animationEnabled: true,
     theme: 'dark2',
@@ -108,7 +108,7 @@ presureChart = new CanvasJS.Chart("presure-graph", {
 
 speedChart.render();
 tempChart.render();
-presureChart.render();
+pressureChart.render();
 tempDataUpdater();
 speedDataUpdater();
 presureDataUpdater();
@@ -117,9 +117,9 @@ function tempDataUpdater() {
     const httpreq_temp = new XMLHttpRequest();
     httpreq_temp.open("GET", "http://" + host + "/api/temperatuur?size=" + tempSize + "&minuten=" + tempMinuten, false);
     httpreq_temp.send(null);
-    var list = [];
-    var temps = JSON.parse(httpreq_temp.responseText);
-    for (var key in temps) {
+    const list = [];
+    const temps = JSON.parse(httpreq_temp.responseText);
+    for (const key in temps) {
         list.push({label: msToTime(temps[key]["time"]), y: temps[key]["degree"]});
     }
     tempChart.options.data[0].dataPoints = list;
@@ -131,9 +131,9 @@ function speedDataUpdater() {
     const httpreq_speed = new XMLHttpRequest();
     httpreq_speed.open("GET", "http://" + host + "/api/windsnelheid?size=" + speedSize + "&minuten=" + speedMinuten, false);
     httpreq_speed.send(null);
-    var list = [];
-    var speeds = JSON.parse(httpreq_speed.responseText);
-    for (var key in speeds) {
+    const list = [];
+    const speeds = JSON.parse(httpreq_speed.responseText);
+    for (const key in speeds) {
         list.push({label: msToTime(speeds[key]["time"]), y: speeds[key]["speed"]});
     }
     speedChart.options.data[0].dataPoints = list;
@@ -143,21 +143,21 @@ function speedDataUpdater() {
 
 function presureDataUpdater() {
     const httpreq_speed = new XMLHttpRequest();
-    httpreq_speed.open("GET", "http://" + host + "/api/druk?size=" + presureSize + "&minuten=" + presureMinuten, false);
+    httpreq_speed.open("GET", "http://" + host + "/api/druk?size=" + pressureSize + "&minuten=" + pressureMinuten, false);
     httpreq_speed.send(null);
-    var list = [];
-    var presures = JSON.parse(httpreq_speed.responseText);
+    const list = [];
+    const presures = JSON.parse(httpreq_speed.responseText);
     for (const key in presures) {
         list.push({label: msToTime(presures[key]["time"]), y: presures[key]["presure"]});
     }
-    presureChart.options.data[0].dataPoints = list;
-    presureChart.render();
+    pressureChart.options.data[0].dataPoints = list;
+    pressureChart.render();
     setTimeout(presureDataUpdater, 5000);
 }
 
 
 function msToTime(duration) {
-    var seconds = parseInt((duration / 1000) % 60),
+    let seconds = parseInt((duration / 1000) % 60),
         minutes = parseInt((duration / (1000 * 60)) % 60),
         hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
@@ -187,10 +187,10 @@ function commitChanges() {
     speedSize = speedSizeDom.value;
     let speedMinutenDom = document.getElementById("speed-minuten");
     speedMinuten = speedMinutenDom.value;
-    let presureSizeDom = document.getElementById("presure-size");
-    presureSize = presureSizeDom.value;
-    let presureMinutenDom = document.getElementById("presure-minuten");
-    presureMinuten = presureMinutenDom.value;
+    let pressureSizeDom = document.getElementById("presure-size");
+    pressureSize = pressureSizeDom.value;
+    let pressureMinutenDom = document.getElementById("presure-minuten");
+    pressureMinuten = pressureMinutenDom.value;
 }
 
 
