@@ -14,106 +14,104 @@ let presureMinuten = 1;
 
 const host = "localhost";
 
-window.onload = function () {
-    tempChart = new CanvasJS.Chart("temp-graph", {
-        backgroundColor: "#202225",
-        animationEnabled: true,
-        theme: 'dark2',
-        title: {
-            text: "Temperatuur",
-            fontWeight: "normal",
-            fontFamily: "roboto",
-            fontSize: 30
-        },
-        axisX: {
-            title: "Tijd",
-            titleFontWeight: "normal",
-            titleFontFamily: "roboto",
-            fontSize: 20
-        },
-        axisY: {
-            title: "Graden Celcius",
-            titleFontWeight: "normal",
-            titleFontFamily: "roboto",
-            fontSize: 20,
-            includeZero: false
-        },
-        data: [{
-            type: 'area',
-            dataPoints: [
-                {x: 0, y: 0}
-            ]
-        }]
-    });
-    speedChart = new CanvasJS.Chart("speed-graph", {
-        backgroundColor: "#202225",
-        animationEnabled: true,
-        theme: 'dark2',
-        title: {
-            text: "WindSnelheid",
-            fontWeight: "normal",
-            fontFamily: "roboto",
-            fontSize: 30
-        },
-        axisX: {
-            title: "Tijd",
-            titleFontWeight: "normal",
-            titleFontFamily: "roboto",
-            fontSize: 20
-        },
-        axisY: {
-            title: "Snelheid in km/h",
-            titleFontWeight: "normal",
-            titleFontFamily: "roboto",
-            fontSize: 20,
-            includeZero: false
-        },
-        data: [{
-            type: 'area',
-            dataPoints: [
-                {x: 0, y: 0}
-            ]
-        }]
-    });
+tempChart = new CanvasJS.Chart("temp-graph", {
+    backgroundColor: "#202225",
+    animationEnabled: true,
+    theme: 'dark2',
+    title: {
+        text: "Temperatuur",
+        fontWeight: "normal",
+        fontFamily: "roboto",
+        fontSize: 30
+    },
+    axisX: {
+        title: "Tijd",
+        titleFontWeight: "normal",
+        titleFontFamily: "roboto",
+        fontSize: 20
+    },
+    axisY: {
+        title: "Graden Celcius",
+        titleFontWeight: "normal",
+        titleFontFamily: "roboto",
+        fontSize: 20,
+        includeZero: false
+    },
+    data: [{
+        type: 'area',
+        dataPoints: [
+            {x: 0, y: 0}
+        ]
+    }]
+});
+speedChart = new CanvasJS.Chart("speed-graph", {
+    backgroundColor: "#202225",
+    animationEnabled: true,
+    theme: 'dark2',
+    title: {
+        text: "WindSnelheid",
+        fontWeight: "normal",
+        fontFamily: "roboto",
+        fontSize: 30
+    },
+    axisX: {
+        title: "Tijd",
+        titleFontWeight: "normal",
+        titleFontFamily: "roboto",
+        fontSize: 20
+    },
+    axisY: {
+        title: "Snelheid in km/h",
+        titleFontWeight: "normal",
+        titleFontFamily: "roboto",
+        fontSize: 20,
+        includeZero: false
+    },
+    data: [{
+        type: 'area',
+        dataPoints: [
+            {x: 0, y: 0}
+        ]
+    }]
+});
 
-    presureChart = new CanvasJS.Chart("presure-graph", {
-        backgroundColor: "#202225",
-        animationEnabled: true,
-        theme: 'dark2',
-        title: {
-            text: "LuchtDruk",
-            fontWeight: "normal",
-            fontFamily: "roboto",
-            fontSize: 30
-        },
-        axisX: {
-            title: "Tijd",
-            titleFontWeight: "normal",
-            titleFontFamily: "roboto",
-            fontSize: 20
-        },
-        axisY: {
-            title: "Druk in hPa",
-            titleFontWeight: "normal",
-            titleFontFamily: "roboto",
-            fontSize: 20,
-            includeZero: false
-        },
-        data: [{
-            type: 'area',
-            dataPoints: [
-                {x: 0, y: 0}
-            ]
-        }]
-    });
+presureChart = new CanvasJS.Chart("presure-graph", {
+    backgroundColor: "#202225",
+    animationEnabled: true,
+    theme: 'dark2',
+    title: {
+        text: "LuchtDruk",
+        fontWeight: "normal",
+        fontFamily: "roboto",
+        fontSize: 30
+    },
+    axisX: {
+        title: "Tijd",
+        titleFontWeight: "normal",
+        titleFontFamily: "roboto",
+        fontSize: 20
+    },
+    axisY: {
+        title: "Druk in hPa",
+        titleFontWeight: "normal",
+        titleFontFamily: "roboto",
+        fontSize: 20,
+        includeZero: false
+    },
+    data: [{
+        type: 'area',
+        dataPoints: [
+            {x: 0, y: 0}
+        ]
+    }]
+});
 
-    speedChart.render();
-    tempChart.render();
-    presureChart.render();
-    tempDataUpdater();
-    speedDataUpdater();
-    presureDataUpdater();
-};
+speedChart.render();
+tempChart.render();
+presureChart.render();
+tempDataUpdater();
+speedDataUpdater();
+presureDataUpdater();
 
 function tempDataUpdater() {
     const httpreq_temp = new XMLHttpRequest();
@@ -181,18 +179,18 @@ window.onload = () => {
 
 
 function commitChanges() {
-    let tempSizeDom = document.getElementById("temp-size").value;
+    let tempSizeDom = document.getElementById("temp-size");
     tempSize = tempSizeDom.value;
-    let tempMinutenDom = document.getElementById("temp-minuten").value;
+    let tempMinutenDom = document.getElementById("temp-minuten");
     tempMinuten = tempMinutenDom.value;
-    let speedSizeDom = document.getElementById("speed-size").value;
-    tempSize = speedSizeDom.value;
-    let speedMinutenDom = document.getElementById("speed-minuten").value;
-    tempSize = speedMinutenDom.value;
-    let presureSizeDom = document.getElementById("presure-size").value;
-    tempSize = presureSizeDom.value;
-    let presureMinutenDom = document.getElementById("presure-minuten").value;
-    tempSize = presureMinutenDom.value;
+    let speedSizeDom = document.getElementById("speed-size");
+    speedSize = speedSizeDom.value;
+    let speedMinutenDom = document.getElementById("speed-minuten");
+    speedMinuten = speedMinutenDom.value;
+    let presureSizeDom = document.getElementById("presure-size");
+    presureSize = presureSizeDom.value;
+    let presureMinutenDom = document.getElementById("presure-minuten");
+    presureMinuten = presureMinutenDom.value;
 }
 
 

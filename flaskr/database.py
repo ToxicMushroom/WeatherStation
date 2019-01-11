@@ -1,12 +1,12 @@
 import time
 import threading
-from Adafruit_BME280 import *
+# from Adafruit_BME280 import *
 import sqlite3
-import serial
+# import serial
 import random
 
-sensor = BME280(t_mode=BME280_OSAMPLE_8, p_mode=BME280_OSAMPLE_8, h_mode=BME280_OSAMPLE_8)
-ser = serial.Serial('/dev/ttyAMA0', baudrate=9600)
+# sensor = BME280(t_mode=BME280_OSAMPLE_8, p_mode=BME280_OSAMPLE_8, h_mode=BME280_OSAMPLE_8)
+# ser = serial.Serial('/dev/ttyAMA0', baudrate=9600)
 
 def current_milli_time():
     return int(round(time.time() * 1000))
@@ -26,13 +26,13 @@ def init():
 
 def reader():
     while 1:
-        # add_temp(random.randint(-10, 25))
-        # add_presure(random.randint(100000, 105000)/100)
-        # add_speed(random.randint(0, 40))
-        add_temp(sensor.read_temperature())
-        add_presure(sensor.read_pressure()/100)
-        if ser.inWaiting() > 0:
-            add_speed(float(ser.read()))
+        add_temp(random.randint(-10, 25))
+        add_presure(random.randint(100000, 105000)/100)
+        add_speed(random.randint(0, 40))
+        # add_temp(sensor.read_temperature())
+        # add_presure(sensor.read_pressure()/100)
+        # if ser.inWaiting() > 0:
+        #     add_speed(float(ser.read()))
         time.sleep(1)
 
 
