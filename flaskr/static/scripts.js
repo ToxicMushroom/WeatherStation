@@ -75,7 +75,7 @@ speedChart = new CanvasJS.Chart("speed-graph", {
     }]
 });
 
-pressureChart = new CanvasJS.Chart("presure-graph", {
+pressureChart = new CanvasJS.Chart("pressure-graph", {
     backgroundColor: "#202225",
     animationEnabled: true,
     theme: 'dark2',
@@ -111,7 +111,7 @@ tempChart.render();
 pressureChart.render();
 tempDataUpdater();
 speedDataUpdater();
-presureDataUpdater();
+pressureDataUpdater();
 
 function tempDataUpdater() {
     const httpreq_temp = new XMLHttpRequest();
@@ -124,7 +124,7 @@ function tempDataUpdater() {
     }
     tempChart.options.data[0].dataPoints = list;
     tempChart.render();
-    setTimeout(tempDataUpdater, 5000);
+    setTimeout(tempDataUpdater, 2000);
 }
 
 function speedDataUpdater() {
@@ -138,21 +138,21 @@ function speedDataUpdater() {
     }
     speedChart.options.data[0].dataPoints = list;
     speedChart.render();
-    setTimeout(speedDataUpdater, 5000);
+    setTimeout(speedDataUpdater, 2000);
 }
 
-function presureDataUpdater() {
+function pressureDataUpdater() {
     const httpreq_speed = new XMLHttpRequest();
     httpreq_speed.open("GET", "http://" + host + "/api/druk?size=" + pressureSize + "&minuten=" + pressureMinuten, false);
     httpreq_speed.send(null);
     const list = [];
-    const presures = JSON.parse(httpreq_speed.responseText);
-    for (const key in presures) {
-        list.push({label: msToTime(presures[key]["time"]), y: presures[key]["presure"]});
+    const pressures = JSON.parse(httpreq_speed.responseText);
+    for (const key in pressures) {
+        list.push({label: msToTime(pressures[key]["time"]), y: pressures[key]["pressure"]});
     }
     pressureChart.options.data[0].dataPoints = list;
     pressureChart.render();
-    setTimeout(presureDataUpdater, 5000);
+    setTimeout(pressureDataUpdater, 2000);
 }
 
 

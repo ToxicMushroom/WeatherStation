@@ -55,7 +55,7 @@ def api_temp():
 
 
 @app.route("/api/druk", methods=['GET'])
-def api_presure():
+def api_pressure():
     size = request.args.get('size')
     minuten = request.args.get('minuten')
 
@@ -73,9 +73,9 @@ def api_presure():
 
     conn = sqlite3.connect('stats.db')
     c = conn.cursor()
-    c.execute("SELECT time, presure FROM presures WHERE time > " + str(database.current_milli_time() - minuten * 60 * 1000))
+    c.execute("SELECT time, pressure FROM pressures WHERE time > " + str(database.current_milli_time() - minuten * 60 * 1000))
     for row in c.fetchall():
-        volledige_lijst.append({'time': row[0], 'presure': row[1]})
+        volledige_lijst.append({'time': row[0], 'pressure': row[1]})
     conn.close()
 
     lijst = []
@@ -84,8 +84,8 @@ def api_presure():
         gemmidelde = volledige_lijst[i]
         if i != 0:
             for b in range(last_i, i):
-                gemmidelde['presure'] = gemmidelde['presure'] + volledige_lijst[b]['presure']
-            gemmidelde['presure'] = gemmidelde['presure'] / math.ceil(len(volledige_lijst) / size)
+                gemmidelde['pressure'] = gemmidelde['pressure'] + volledige_lijst[b]['pressure']
+            gemmidelde['pressure'] = gemmidelde['pressure'] / math.ceil(len(volledige_lijst) / size)
         lijst.append(gemmidelde)
         last_i = i
 
