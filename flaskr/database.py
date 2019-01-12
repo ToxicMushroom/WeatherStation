@@ -1,14 +1,16 @@
 import time
 import threading
-# from Adafruit_BME280 import *
+from Adafruit_BME280 import *
 import sqlite3
-# import serial
+import serial
 import random
+import re
 
-# sensor = BME280(t_mode=BME280_OSAMPLE_8, p_mode=BME280_OSAMPLE_8, h_mode=BME280_OSAMPLE_8)
+sensor = BME280(t_mode=BME280_OSAMPLE_8, p_mode=BME280_OSAMPLE_8, h_mode=BME280_OSAMPLE_8)
+ser_pattern = re.compile("^\d+\.\d+$")
 
+ser = serial.Serial('/dev/ttyACM0', baudrate=9600)
 
-# ser = serial.Serial('/dev/ttyAMA0', baudrate=9600)
 
 def current_milli_time():
     return int(round(time.time() * 1000))
@@ -23,7 +25,11 @@ def init():
 
     conn.commit()
     conn.close()
-    threading.Thread(target=reader, args=()).start()
+    try:
+        threading.Thread(target=reader, args=()).start()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        sys.exit()
 
 
 def reader():
@@ -34,15 +40,24 @@ def reader():
         # add_speed(10)
 
         # Random testing data
-        add_temp(random.randint(-10, 25))
-        add_pressure(random.randint(100000, 105000) / 100)
-        add_speed(random.randint(0, 40))
+        # add_temp(random.randint(-10, 25))
+        # add_pressure(random.randint(100000, 105000) / 100)
+        # add_speed(random.randint(0, 40))
 
         # Actual data
-        # add_temp(sensor.read_temperature())
-        # add_pressure(sensor.read_pressure() / 100)
-        # if ser.inWaiting() > 0:
-        #     add_speed(float(ser.read()))
+        add_temp(sensor.read_temperature())
+        add_pressure(sensor.read_pressure() / 100)
+        biggest = 0.0
+        while ser.inWaiting() > 0:
+            line = ser.readline();
+            try:
+                line = float(line)
+                if line > biggest:
+                    biggest = line;
+            except ValueError:
+                continue
+        if (biggest is not 0.0):
+            add_speed(biggest)
         time.sleep(1)
 
 
