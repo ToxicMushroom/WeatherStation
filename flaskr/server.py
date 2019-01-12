@@ -41,7 +41,6 @@ def api_temp():
     conn.close()
 
     lijst = []
-    last_i = 0
 
     start = 0
     end = len(volledige_lijst)
@@ -49,12 +48,13 @@ def api_temp():
 
     for i in range(start, end, step):
         average = volledige_lijst[i].copy()
-        if i != 0:
-            for b in range(last_i, i):
+        loops = 1
+        for b in range(i, i + step):
+            if b < len(volledige_lijst) and b is not i:
+                loops += 1
                 average['degree'] += volledige_lijst[b]['degree']
-            average['degree'] = average['degree'] / (step + 1)
+        average['degree'] = average['degree'] / loops
         lijst.append(average)
-        last_i = i
     return jsonify(lijst)
 
 
@@ -84,7 +84,6 @@ def api_pressure():
     conn.close()
 
     lijst = []
-    last_i = 0
 
     start = 0
     end = len(volledige_lijst)
@@ -92,14 +91,13 @@ def api_pressure():
 
     for i in range(start, end, step):
         average = volledige_lijst[i].copy()
-        if i != 0:
-            for b in range(last_i, i):
+        loops = 1
+        for b in range(i, i + step):
+            if b < len(volledige_lijst) and b is not i:
+                loops += 1
                 average['pressure'] += volledige_lijst[b]['pressure']
-            average['pressure'] = average['pressure'] / (step + 1)
-
+        average['pressure'] = average['pressure'] / loops
         lijst.append(average)
-        last_i = i
-
     return jsonify(lijst)
 
 
@@ -129,7 +127,6 @@ def api_speed():
     conn.close()
 
     lijst = []
-    last_i = 0
 
     start = 0
     end = len(volledige_lijst)
@@ -137,13 +134,13 @@ def api_speed():
 
     for i in range(start, end, step):
         average = volledige_lijst[i].copy()
-        if i != 0:
-            for b in range(last_i, i):
+        loops = 1
+        for b in range(i, i + step):
+            if b < len(volledige_lijst) and b is not i:
+                loops += 1
                 average['speed'] = average['speed'] + volledige_lijst[b]['speed']
-            average['speed'] = average['speed'] / (step + 1)
+        average['speed'] = average['speed'] / loops
         lijst.append(average)
-        last_i = i
-
     return jsonify(lijst)
 
 
