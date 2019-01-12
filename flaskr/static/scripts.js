@@ -12,7 +12,7 @@ let pressureChart;
 let pressureSize = 5;
 let pressureMinuten = 1;
 
-const host = "localhost";
+const host = "192.168.0.44:8080";
 
 tempChart = new CanvasJS.Chart("temp-graph", {
     backgroundColor: "#202225",
@@ -187,9 +187,9 @@ function commitChanges() {
     speedSize = speedSizeDom.value;
     let speedMinutenDom = document.getElementById("speed-minuten");
     speedMinuten = speedMinutenDom.value;
-    let pressureSizeDom = document.getElementById("presure-size");
+    let pressureSizeDom = document.getElementById("pressure-size");
     pressureSize = pressureSizeDom.value;
-    let pressureMinutenDom = document.getElementById("presure-minuten");
+    let pressureMinutenDom = document.getElementById("pressure-minuten");
     pressureMinuten = pressureMinutenDom.value;
 }
 

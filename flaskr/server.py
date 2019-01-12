@@ -42,7 +42,13 @@ def api_temp():
 
     lijst = []
     last_i = 0
-    for i in range(0, len(volledige_lijst), math.ceil(len(volledige_lijst) / size)):
+
+    start = 0
+    end = len(volledige_lijst)
+    step = int(math.ceil(len(volledige_lijst) / size))
+    print (str(start) + " - " + str(end) + " - " + str(step))
+
+    for i in range(start, end, step):
         gemmidelde = volledige_lijst[i]
         if i != 0:
             for b in range(last_i, i):
@@ -80,7 +86,12 @@ def api_pressure():
 
     lijst = []
     last_i = 0
-    for i in range(0, len(volledige_lijst), math.ceil(len(volledige_lijst) / size)):
+
+    start = 0
+    end = len(volledige_lijst)
+    step = int(math.ceil(len(volledige_lijst) / size))
+
+    for i in range(start, end, step):
         gemmidelde = volledige_lijst[i]
         if i != 0:
             for b in range(last_i, i):
@@ -119,7 +130,12 @@ def api_speed():
 
     lijst = []
     last_i = 0
-    for i in range(0, len(volledige_lijst), math.ceil(len(volledige_lijst) / size)):
+
+    start = 0
+    end = len(volledige_lijst)
+    step = int(math.ceil(len(volledige_lijst) / size))
+
+    for i in range(start, end, step):
         gemmidelde = volledige_lijst[i]
         if i != 0:
             for b in range(last_i, i):
@@ -132,4 +148,4 @@ def api_speed():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=80, host='0.0.0.0')
+    app.run(debug=True, port=8080, host='0.0.0.0')
