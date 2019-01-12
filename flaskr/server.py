@@ -46,17 +46,15 @@ def api_temp():
     start = 0
     end = len(volledige_lijst)
     step = int(math.ceil(len(volledige_lijst) / size))
-    print (str(start) + " - " + str(end) + " - " + str(step))
 
     for i in range(start, end, step):
-        gemmidelde = volledige_lijst[i]
+        average = volledige_lijst[i].copy()
         if i != 0:
             for b in range(last_i, i):
-                gemmidelde['degree'] = gemmidelde['degree'] + volledige_lijst[b]['degree']
-            gemmidelde['degree'] = gemmidelde['degree'] / math.ceil(len(volledige_lijst) / size)
-        lijst.append(gemmidelde)
+                average['degree'] += volledige_lijst[b]['degree']
+            average['degree'] = average['degree'] / (step + 1)
+        lijst.append(average)
         last_i = i
-
     return jsonify(lijst)
 
 
@@ -79,7 +77,8 @@ def api_pressure():
 
     conn = sqlite3.connect('stats.db')
     c = conn.cursor()
-    c.execute("SELECT time, pressure FROM pressures WHERE time > " + str(database.current_milli_time() - minuten * 60 * 1000))
+    c.execute(
+        "SELECT time, pressure FROM pressures WHERE time > " + str(database.current_milli_time() - minuten * 60 * 1000))
     for row in c.fetchall():
         volledige_lijst.append({'time': row[0], 'pressure': row[1]})
     conn.close()
@@ -92,12 +91,13 @@ def api_pressure():
     step = int(math.ceil(len(volledige_lijst) / size))
 
     for i in range(start, end, step):
-        gemmidelde = volledige_lijst[i]
+        average = volledige_lijst[i].copy()
         if i != 0:
             for b in range(last_i, i):
-                gemmidelde['pressure'] = gemmidelde['pressure'] + volledige_lijst[b]['pressure']
-            gemmidelde['pressure'] = gemmidelde['pressure'] / math.ceil(len(volledige_lijst) / size)
-        lijst.append(gemmidelde)
+                average['pressure'] += volledige_lijst[b]['pressure']
+            average['pressure'] = average['pressure'] / (step + 1)
+
+        lijst.append(average)
         last_i = i
 
     return jsonify(lijst)
@@ -136,12 +136,12 @@ def api_speed():
     step = int(math.ceil(len(volledige_lijst) / size))
 
     for i in range(start, end, step):
-        gemmidelde = volledige_lijst[i]
+        average = volledige_lijst[i].copy()
         if i != 0:
             for b in range(last_i, i):
-                gemmidelde['speed'] = gemmidelde['speed'] + volledige_lijst[b]['speed']
-            gemmidelde['speed'] = gemmidelde['speed'] / math.ceil(len(volledige_lijst) / size)
-        lijst.append(gemmidelde)
+                average['speed'] = average['speed'] + volledige_lijst[b]['speed']
+            average['speed'] = average['speed'] / (step + 1)
+        lijst.append(average)
         last_i = i
 
     return jsonify(lijst)
