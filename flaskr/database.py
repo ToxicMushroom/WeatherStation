@@ -49,14 +49,14 @@ def reader():
         add_pressure(sensor.read_pressure() / 100)
         biggest = 0.0
         while ser.inWaiting() > 0:
-            line = ser.readline();
+            line = ser.readline()
             try:
                 line = float(line)
                 if line > biggest:
-                    biggest = line;
+                    biggest = line
             except ValueError:
                 continue
-        if (biggest is not 0.0):
+        if biggest is not 0.0:
             add_speed(biggest)
         time.sleep(1)
 
